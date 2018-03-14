@@ -62,7 +62,7 @@ int constructMessage(int command, int data)
 
 void carryOutCommand()
 {
-  setPinsLow();
+  setPinsHigh();
 
   if (dir == 1)
   {
@@ -119,34 +119,31 @@ void parseData(int rec)
 
 void forward()
 {
-  digitalWrite(2, HIGH);
-  digitalWrite(4, HIGH);
+  digitalWrite(2, LOW);
+  digitalWrite(4, LOW);
 }
 
 void reverse()
 {
-  digitalWrite(3, HIGH);
-  digitalWrite(5, HIGH);
+  digitalWrite(3, LOW);
+  digitalWrite(5, LOW);
 }
 
 void brake()
 {
-  digitalWrite(2, LOW);
-  digitalWrite(3, LOW);
-  digitalWrite(4, LOW);
-  digitalWrite(5, LOW);
+  setPinsHigh();
 }
 
 void left()
 {
-  digitalWrite(3, HIGH);
-  digitalWrite(4, HIGH);
+  digitalWrite(3, LOW);
+  digitalWrite(4, LOW);
 }
 
 void right()
 {
-  digitalWrite(2, HIGH);
-  digitalWrite(5, HIGH);
+  digitalWrite(2, LOW);
+  digitalWrite(5, LOW);
 }
 
 void setspeed(int _speed)
@@ -167,8 +164,16 @@ void error()
 
 void setPinsLow()
 {
-  for (int i = 2; i < 9; i++)
+  for (int i = 2; i <= 5; i++)
   {
     digitalWrite(i, LOW);   // Reset all pins low.
+  }
+}
+
+void setPinsHigh()
+{
+  for (int i = 2; i <= 5; i++)
+  {
+    digitalWrite(i, HIGH);   // Reset all pins low.
   }
 }
