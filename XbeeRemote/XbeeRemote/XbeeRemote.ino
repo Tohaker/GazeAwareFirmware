@@ -8,6 +8,10 @@ void setup()
   Serial.begin(9600);
 
   while (!Serial);  // Wait for connection
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
 }
 
 void loop()
@@ -58,7 +62,7 @@ int constructMessage(int command, int data)
 
 void carryOutCommand()
 {
-  setPinsLow();
+  setPinsHigh();
 
   if (dir == 1)
   {
@@ -115,49 +119,64 @@ void parseData(int rec)
 
 void forward()
 {
-  digitalWrite(2, HIGH);
+  digitalWrite(2, LOW);
+  digitalWrite(4, LOW);
 }
 
 void reverse()
 {
-  digitalWrite(3, HIGH);
+  digitalWrite(3, LOW);
+  digitalWrite(5, LOW);
 }
 
 void brake()
 {
-  digitalWrite(4, HIGH);
+  setPinsHigh();
 }
 
 void left()
 {
-  digitalWrite(5, HIGH);
+  digitalWrite(3, LOW);
+  digitalWrite(4, LOW);
+  delay(1500);
+  brake();
 }
 
 void right()
 {
-  digitalWrite(6, HIGH);
+  digitalWrite(2, LOW);
+  digitalWrite(5, LOW);
+  delay(1500);
+  brake();
 }
 
 void setspeed(int _speed)
 {
-  digitalWrite(7, HIGH);
-  // flash at speed?
+  // Currently Unused - Do nothing.
 }
 
 void ping(int data)
 {
-  digitalWrite(8, HIGH);
+  //TODO: Handle Pings (perhaps perform sequence?)
 }
 
 void error()
 {
-
+  //TODO: Handle Errors
 }
 
 void setPinsLow()
 {
-  for (int i = 2; i < 9; i++)
+  for (int i = 2; i <= 5; i++)
   {
     digitalWrite(i, LOW);   // Reset all pins low.
+  }
+}
+
+void setPinsHigh()
+{
+  for (int i = 2; i <= 5; i++)
+  {
+    digitalWrite(i, HIGH);   // Reset all pins low.
   }
 }
